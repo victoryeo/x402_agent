@@ -12,10 +12,6 @@
 
 - `GET /health`
 
-## Migration
-
-python scripts/run-migrations.py
-
 ## Analysis
 
 The x402 payment AI Agent is supported via:
