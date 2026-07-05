@@ -65,6 +65,7 @@ agentic_ai = AgenticAI(
 
 class AgentRequest(BaseModel):
   message: str
+  url: str | None = None
   thread_id: str | None = None
 
 class RegisterRequest(BaseModel):
@@ -86,7 +87,7 @@ async def agent_endpoint(payload: AgentRequest):
     raise HTTPException(status_code=500, detail="Missing DASHSCOPE_API_KEY")
 
   try:
-    reply = await agentic_ai.run(payload.message)
+    reply = await agentic_ai.run(payload.message, url=payload.url)
     return {"reply": reply}
   except Exception as exc:
     raise HTTPException(status_code=500, detail=str(exc))

@@ -49,6 +49,7 @@ async def call_x402_api(
     body: str | None = None,
 ) -> dict:
     target_url = (url or os.getenv("X402_API_URL", "")).strip()
+    print(f"Calling x402 API: passin {url} and {target_url} with method {method}")
     if not target_url:
         return {"error": "x402 API URL not configured; set X402_API_URL or provide a URL in the request"}
 

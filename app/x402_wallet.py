@@ -30,6 +30,7 @@ class X402Wallet:
         print(f"✅ x402 wallet initialized: {account.address}")
 
     async def pay_and_retry(self, url: str, method: str = "GET", headers: dict | None = None, body: bytes | None = None) -> dict:
+        print(f"Paying and retrying x402 API call: {url} with method {method}")
         if not self._initialized or self.client is None:
             raise RuntimeError("x402 wallet not initialized")
 
@@ -37,6 +38,8 @@ class X402Wallet:
             request_headers = dict(headers or {})
             response = await http.request(method, url, headers=request_headers, content=body)
             await response.aread()
+
+            print(f"x402 API response: {response.status_code} {response.headers}")
 
             return {
                 "status": response.status_code,

@@ -29,11 +29,12 @@ class AgenticAI:
         self.model = model
         self.x402_wallet = x402_wallet
 
-    async def run(self, user_message: str, conversation: list[dict] | None = None) -> str:
+    async def run(self, user_message: str, conversation: list[dict] | None = None, url: str | None = None) -> str:
+        print(f"AgenticAI received message: {user_message}, {url}")
         normalized_message = user_message.strip().lower()
         if normalized_message in DEFAULT_X402_REQUESTS:
             print("Calling default x402 API")
-            result = await call_x402_api(self.x402_wallet)
+            result = await call_x402_api(self.x402_wallet, url=url)
             return json.dumps(result, ensure_ascii=False)
 
         messages = list(conversation or [])

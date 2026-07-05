@@ -33,7 +33,7 @@ curl -X POST http://localhost:8001/agent -H "Content-Type: application/json" \
  -d '{"message": "search the web for AI news"}'
 
 curl -X POST http://localhost:8001/agent -H "Content-Type: application/json" \
- -d '{"message": "call x402 API", "url": "www.google.com"}'
+ -d '{"message": "call x402 API", "url": "http://www.coingecko.com"}'
 
 If X402_API_URL is not set, that command returns a configuration error instead of asking for the URL interactively.
 
