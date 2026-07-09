@@ -1,4 +1,4 @@
-# X402 AI Agent Service
+# X402 Payment AI Agent
 
 ## Setup
 
@@ -7,10 +7,6 @@
 3. Set `OPENAI_API_KEY` and (optionally) `OPENAI_MODEL` if you want the OpenAI endpoint.
 4. Install dependencies: `pip install -r requirements.txt`
 5. Run: `uvicorn app.main:app --reload --port 8001`
-
-## Endpoints
-
-- `GET /health`
 
 ## Analysis
 
@@ -29,11 +25,17 @@ The x402 payment AI Agent is supported via:
 Set X402_EVM_PRIVATE_KEY in your .env with an Ethereum private key (the wallet pays for API access). Set X402_API_URL to the default paid API endpoint you want the agent to call when you say "call x402 API". Then the agent's /agent endpoint can call the call_x402_api tool, which automatically retries 402 responses by crafting and
 sending payment payloads.
 
-curl -X POST http://localhost:8001/agent -H "Content-Type: application/json" \
- -d '{"message": "search the web for AI news"}'
+## Endpoints
 
-curl -X POST http://localhost:8001/agent -H "Content-Type: application/json" \
- -d '{"message": "call x402 API", "url": "http://www.coingecko.com"}'
+- `GET /health`
+
+- `POST /agent`
+  curl -X POST http://localhost:8001/agent -H "Content-Type: application/json" \
+   -d '{"message": "search the web for AI news"}'
+
+- `POST /agent`
+  curl -X POST http://localhost:8001/agent -H "Content-Type: application/json" \
+   -d '{"message": "call x402 API", "url": "http://www.coingecko.com"}'
 
 If X402_API_URL is not set, that command returns a configuration error instead of asking for the URL interactively.
 
