@@ -43,7 +43,6 @@ app.add_middleware(
 openai_model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
 qwen_model = os.getenv("QWEN_MODEL", "qwen-flash")
 dashscope_api_key = os.getenv("DASHSCOPE_API_KEY", "")
-db_connection_string = os.getenv("SUPABASE_DB_URL", "")
 
 #openai_client = OpenAI()
 qwen_client = OpenAI(

@@ -1,8 +1,8 @@
-# AI Engine Service (FastAPI)
+# X402 AI Agent Service
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and set Supabase credentials (use anon key).
+1. Copy `.env.example` to `.env`.
 2. Set `DASHSCOPE_API_KEY`, `DASHSCOPE_BASE_URL` (use `https://dashscope-intl.aliyuncs.com`), and (optionally) `QWEN_MODEL` for the default chatbot.
 3. Set `OPENAI_API_KEY` and (optionally) `OPENAI_MODEL` if you want the OpenAI endpoint.
 4. Install dependencies: `pip install -r requirements.txt`
@@ -43,3 +43,11 @@ If X402_API_URL is not set, that command returns a configuration error instead o
 - No server-side x402 resource server is set up (This is only the client side)
 - No facilitator is configured
 - No endpoints to receive x402 payments (no paywall on your own APIs)
+
+### How 402 is called indirectly
+
+pay_and_retry doesn't call create_payment_payload directly. The chain is:
+
+1. X402Wallet pay_and_retry creates x402HttpxClient(self.client) passing the x402Client (x402_wallet.py:37)
+2. x402HttpxClient.**init** creates x402AsyncTransport(x402_client) storing it as self.\_client (httpx.py:364, 78)
+3. When http.request() gets a 402 response, x402AsyncTransport.handle_async_request() calls self.\_client.create_payment_payload(payment_required) (httpx.py:150) — the \_client is the x402Client from step 1.
